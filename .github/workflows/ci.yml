@@ -59,7 +59,7 @@ jobs:
         with:
           distribution: temurin
           java-version: '17'
-      - uses: android-actions/setup-android@v3
+      # The runner ships the Android SDK (ANDROID_HOME); android-actions/setup-android fails on its sdkmanager.
       - name: Build the package
         working-directory: sdk
         run: |

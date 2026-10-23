@@ -69,8 +69,8 @@ bare app add the same entitlement in Xcode and the intent filter in `AndroidMani
 
 The app holds only the public tracking token, so it cannot create commissions. Send purchases to
 your backend, validate the store receipt there, and report them with the server SDK
-(`client.trackMobilePurchase(...)` in `referalli`, i.e. `POST /v1/mobile/purchases` with a secret
-API key).
+(`referalli.mobile.purchases({ eventId, customerRef, amountMinor, currency })` with the `referalli`
+package, i.e. `POST /v1/mobile/purchases` with a secret API key).
 
 ## Privacy and App Tracking Transparency
 

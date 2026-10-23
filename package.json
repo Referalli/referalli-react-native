@@ -1,0 +1,83 @@
+{
+  "name": "@referalli/react-native",
+  "version": "0.1.0",
+  "description": "Referalli for React Native: referral links, Play Install Referrer, deferred deep links and signup tracking",
+  "license": "MIT",
+  "main": "lib/commonjs/index.js",
+  "module": "lib/module/index.js",
+  "types": "lib/typescript/index.d.ts",
+  "react-native": "lib/module/index.js",
+  "exports": {
+    ".": {
+      "types": "./lib/typescript/index.d.ts",
+      "react-native": "./lib/module/index.js",
+      "import": "./lib/module/index.js",
+      "require": "./lib/commonjs/index.js"
+    },
+    "./app.plugin.js": "./app.plugin.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib",
+    "src",
+    "plugin/build",
+    "app.plugin.js",
+    "android/build.gradle",
+    "android/src",
+    "ios",
+    "referalli-react-native.podspec",
+    "react-native.config.js",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "rm -rf lib plugin/build && tsc -p tsconfig.build.json && tsc -p tsconfig.cjs.json && tsc -p tsconfig.types.json && tsc -p tsconfig.plugin.json",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "test": "vitest run",
+    "prepack": "npm run build"
+  },
+  "dependencies": {
+    "referalli": "^0.1.0"
+  },
+  "peerDependencies": {
+    "expo": ">=50",
+    "react-native": ">=0.71"
+  },
+  "peerDependenciesMeta": {
+    "expo": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@types/node": "^22.9.0",
+    "typescript": "^5.6.3",
+    "vitest": "^3.0.0"
+  },
+  "keywords": [
+    "referral",
+    "affiliate",
+    "attribution",
+    "deep-link",
+    "deferred-deep-link",
+    "install-referrer",
+    "react-native",
+    "expo",
+    "referalli"
+  ],
+  "homepage": "https://referalli.com",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Referalli/referalli-react-native.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Referalli/referalli-react-native/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

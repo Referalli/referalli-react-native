@@ -1,0 +1,12 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "types": ["node"],
+    // Monorepo: the core client's source (falls back to the installed `referalli` elsewhere).
+    "paths": {
+      "referalli": ["../sdk-js/src/index.ts"],
+      "react-native": ["./test/mocks/react-native.ts"]
+    }
+  },
+  "include": ["src/**/*.ts", "test/**/*.ts", "plugin/src/**/*.ts", "vitest.config.ts"]
+}

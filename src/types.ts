@@ -73,6 +73,6 @@ export interface ReferalliNativeModule {
 
 /** The slice of React Native's `Linking` the SDK uses. */
 export interface LinkingLike {
-  getInitialURL(): Promise<string | null>;
+  getInitialURL(): Promise<string | null | undefined>;
   addEventListener(type: 'url', handler: (event: { url: string }) => void): { remove(): void };
 }

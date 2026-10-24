@@ -1,4 +1,4 @@
-import { createMobileClient } from 'referalli';
+import { createMobileClient, MobileApiError } from 'referalli';
 import { parseInstallReferrer, parseLink } from './attribution.js';
 import type {
   ConfigureOptions,
@@ -29,6 +29,12 @@ export class ReferalliError extends Error {
     super(message);
     this.name = 'ReferalliError';
   }
+}
+
+/** The core client's typed error as this SDK's (same message and status). */
+function toReferalliError(e: unknown): ReferalliError {
+  if (e instanceof MobileApiError) return new ReferalliError(e.message, e.status);
+  return new ReferalliError(`could not reach Referalli: ${(e as Error)?.message ?? String(e)}`, null);
 }
 
 export interface TrackerDeps {
@@ -161,7 +167,7 @@ export class ReferalliTracker {
     try {
       result = await client.attributeInstall(customerRef, current?.clickId ?? undefined, await this.anonId());
     } catch (e) {
-      throw new ReferalliError(`could not reach Referalli: ${(e as Error).message}`, null);
+      throw toReferalliError(e);
     }
     if (typeof result?.attributed !== 'boolean') {
       throw new ReferalliError('Referalli refused the install attribution', null);
@@ -171,19 +177,23 @@ export class ReferalliTracker {
 
   /** Ties the install to a signed-up customer (or a hashed email). */
   async identify(customerRef?: string, emailHash?: string): Promise<void> {
-    const body: Record<string, string> = { anonId: await this.anonId() };
-    if (customerRef) body.customerRef = customerRef;
-    if (emailHash) body.emailHash = emailHash;
-    await this.post('/identify', body);
+    const anonId = await this.anonId();
+    try {
+      await this.mobile.identify(anonId, { customerRef, emailHash });
+    } catch (e) {
+      throw toReferalliError(e);
+    }
   }
 
   /** Reports an app visit; returns the click id the API recorded or echoed. */
   async trackVisit(visit: { code?: string | null; clickId?: string | null; url?: string } = {}): Promise<string | null> {
-    const body: Record<string, string> = { anonId: await this.anonId() };
-    if (visit.code) body.code = visit.code;
-    if (visit.clickId) body.clickId = visit.clickId;
-    if (visit.url) body.url = visit.url.slice(0, 2048);
-    const json = (await this.post('/visit', body)) as { clickId?: string | null };
+    const anonId = await this.anonId();
+    let json: { clickId?: string | null };
+    try {
+      json = await this.mobile.trackVisit(anonId, visit);
+    } catch (e) {
+      throw toReferalliError(e);
+    }
     return json.clickId ?? visit.clickId ?? null;
   }
 
@@ -300,21 +310,6 @@ export class ReferalliTracker {
         // a listener's error must not break attribution
       }
     }
-  }
-
-  private async post(path: string, body: Record<string, string>): Promise<unknown> {
-    let res: Response;
-    try {
-      res = await this.fetchImpl(`${this.baseUrl}/t/${encodeURIComponent(this.publishableKey)}${path}`, {
-        method: 'POST',
-        headers: { 'content-type': 'application/json', accept: 'application/json' },
-        body: JSON.stringify(body),
-      });
-    } catch (e) {
-      throw new ReferalliError(`could not reach Referalli: ${(e as Error).message}`, null);
-    }
-    if (!res.ok) throw new ReferalliError(`Referalli answered ${res.status} for POST ${path}`, res.status);
-    return res.json().catch(() => ({}));
   }
 }
 

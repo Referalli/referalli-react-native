@@ -1,6 +1,6 @@
 {
   "name": "@referalli/react-native",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Referalli for React Native: referral links, Play Install Referrer, deferred deep links and signup tracking",
   "license": "MIT",
   "main": "lib/commonjs/index.js",
@@ -39,7 +39,7 @@
     "prepack": "npm run build"
   },
   "dependencies": {
-    "referalli": "^0.1.1"
+    "referalli": "^0.2.0"
   },
   "peerDependencies": {
     "expo": ">=50",

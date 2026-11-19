@@ -1,4 +1,4 @@
-import { createMobileClient, MobileApiError } from 'referalli';
+import { createMobileClient, MobileApiError } from '@referalli/sdk';
 import { parseInstallReferrer, parseLink } from './attribution.js';
 import type {
   ConfigureOptions,

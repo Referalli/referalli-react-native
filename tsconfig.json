@@ -2,9 +2,9 @@
   "extends": "./tsconfig.base.json",
   "compilerOptions": {
     "types": ["node"],
-    // Monorepo: the core client's source (falls back to the installed `referalli` elsewhere).
+    // Monorepo: the core client's source (falls back to the installed `@referalli/sdk` elsewhere).
     "paths": {
-      "referalli": ["../sdk-js/src/index.ts"],
+      "@referalli/sdk": ["../sdk-js/src/index.ts"],
       "react-native": ["./test/mocks/react-native.ts"],
       "react": ["./test/mocks/react.ts"]
     }

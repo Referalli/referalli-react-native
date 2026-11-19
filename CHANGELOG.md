@@ -3,6 +3,10 @@
 All notable changes to `@referalli/react-native` are documented here.
 This project follows [Semantic Versioning](https://semver.org/); before 1.0, minor versions may break.
 
+## 0.4.1 - 2026-11-18
+
+- Depends on `@referalli/sdk`, the core SDK's new name on npm (the unscoped `referalli` package stays at 0.3.16 and gets no more releases). Install `@referalli/sdk` and import from it.
+
 ## 0.4.0 - 2026-11-18
 
 - `useReferrerSummary({ programId, getAuthToken })` returns the referrer's code, link, stats and history (the widget's `widget/me`), signed in with your auth token like the web widget.

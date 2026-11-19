@@ -3,6 +3,12 @@
 All notable changes to `@referalli/react-native` are documented here.
 This project follows [Semantic Versioning](https://semver.org/); before 1.0, minor versions may break.
 
+## 0.4.0 - 2026-11-18
+
+- `useReferrerSummary({ programId, getAuthToken })` returns the referrer's code, link, stats and history (the widget's `widget/me`), signed in with your auth token like the web widget.
+- `<ReferralPanel>`: a themable native referrer screen (code, share, stats) built on the hook.
+- `react` is now a peer dependency (>= 18).
+
 ## 0.3.0 - 2026-11-02
 
 - Depends on `referalli` ^0.3.0 (the `referalli/webhooks` entry point, new endpoints and typed errors).

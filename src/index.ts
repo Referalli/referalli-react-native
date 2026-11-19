@@ -12,6 +12,7 @@
  * (POST /v1/mobile/purchases, after validating the receipt), never from the app.
  */
 import { defaultDeps } from './native.js';
+import { setSummaryDefaults } from './summary.js';
 import { ReferalliTracker } from './tracker.js';
 import type { ConfigureOptions, Referral, SignupOptions, SignupResult } from './types.js';
 
@@ -26,6 +27,7 @@ function tracker(): ReferalliTracker {
 export function configure(publishableKey: string, options: ConfigureOptions = {}): ReferalliTracker {
   current?.dispose();
   current = new ReferalliTracker(publishableKey, options, defaultDeps(options));
+  setSummaryDefaults(publishableKey, current.baseUrl);
   return current;
 }
 
@@ -65,6 +67,8 @@ export function reset(): Promise<void> {
 }
 
 export { parseInstallReferrer, parseLink } from './attribution.js';
+export { fetchReferrerSummary, ReferrerSummaryError, type ReferrerSummary, type ReferrerSummaryOptions } from './summary.js';
+export { ReferralPanel, useReferrerSummary, type ReferralPanelProps, type ReferralPanelTheme, type UseReferrerSummary } from './react.js';
 export { DEFAULT_BASE_URL, ReferalliError, ReferalliTracker, memoryStorage } from './tracker.js';
 export type {
   ConfigureOptions,

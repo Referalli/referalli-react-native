@@ -19,4 +19,9 @@ export const Linking = {
 
 export const NativeModules: Record<string, unknown> = {};
 
+export const View = 'View';
+export const Text = 'Text';
+export const Pressable = 'Pressable';
+export const Share = { share: async (_c: { message: string }) => ({}) };
+
 export const Platform = { OS: 'ios' as 'ios' | 'android' };

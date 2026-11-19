@@ -30,7 +30,7 @@ jobs:
       - name: Version matches the tag
         run: test "$(node -p 'require("./package.json").version')" = "${GITHUB_REF_NAME#v}"
       - name: The core it depends on is already on npm (release referalli-js first)
-        run: npm view "referalli@$(node -p 'require("./package.json").dependencies.referalli')" version
+        run: npm view "@referalli/sdk@$(node -p 'require("./package.json").dependencies["@referalli/sdk"]')" version
       - run: npm install --no-audit --no-fund --legacy-peer-deps
       - run: npm test --if-present
       - name: Publish
